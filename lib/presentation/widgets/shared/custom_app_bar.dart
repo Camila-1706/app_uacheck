@@ -1,7 +1,7 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class CustomAppBar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget{
   final String title;
 
   const CustomAppBar({super.key, required this.title});
@@ -39,4 +39,7 @@ class CustomAppBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(50);
 }

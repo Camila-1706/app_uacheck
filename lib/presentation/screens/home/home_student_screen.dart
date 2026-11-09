@@ -8,12 +8,13 @@ class HomeStudentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold( 
+      appBar: CustomAppBar(title: 'Inicio Estudiante',),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              const CustomAppBar(title: 'Inicio Estudiante',),
+              
               Text('FeCHA'),
               Text('HOLAAA'),
               Container(

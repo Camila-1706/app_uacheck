@@ -1,4 +1,6 @@
 import 'package:app_uacheck_1/config/router/app_router.dart';
+import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
+import 'package:app_uacheck_1/presentation/screens/auth/register_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/home/home_student_screen.dart';
 import 'package:app_uacheck_1/presentation/widgets/student/custom_card.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: HomeStudentScreen()
+      home: HomeStudentScreen(),
     );
   }
 }
