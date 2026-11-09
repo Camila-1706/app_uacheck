@@ -2,7 +2,8 @@ import 'package:app_uacheck_1/config/router/app_router.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/register_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/home/home_student_screen.dart';
-import 'package:app_uacheck_1/presentation/widgets/student/custom_card.dart';
+import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart';
+import 'package:app_uacheck_1/presentation/widgets/teacher/summary_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,9 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: HomeStudentScreen(),
+      home: HomeTeacherScreen(),
     );
   }
 }

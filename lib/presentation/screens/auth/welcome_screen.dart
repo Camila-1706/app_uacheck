@@ -1,4 +1,5 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
+import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -6,9 +7,9 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
@@ -49,7 +50,9 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 25),
                   OutlinedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                    },
                     icon: Icon(Icons.assignment_ind_outlined),
                     label: Text('Soy Docente'),
                     style: ElevatedButton.styleFrom(
@@ -67,7 +70,9 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   OutlinedButton.icon(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                    },
                     icon: Icon(Icons.school),
                     label: Text('Soy Estudiante'),
                     style: ElevatedButton.styleFrom(
