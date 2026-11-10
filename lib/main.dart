@@ -1,14 +1,8 @@
-import 'package:app_uacheck_1/config/router/app_router.dart';
-import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/auth/register_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/home/home_student_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart';
-import 'package:app_uacheck_1/presentation/widgets/teacher/summary_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'config/constants/app_constants.dart';
+import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart';
+import 'package:app_uacheck_1/presentation/screens/teacher/teacher_courses_screen.dart';
+import 'package:app_uacheck_1/presentation/widgets/teacher/course_card.dart';
+import 'package:flutter/material.dart';
 import 'config/theme/app_theme.dart';
 
 
@@ -23,7 +17,9 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: HomeTeacherScreen(),
+      home: TeacherCoursesScreen()
+        
+    
     );
   }
 }
