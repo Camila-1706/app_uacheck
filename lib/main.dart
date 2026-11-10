@@ -1,5 +1,6 @@
 
 import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart';
+import 'package:app_uacheck_1/presentation/screens/teacher/add_course_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/teacher_courses_screen.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/course_card.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: TeacherCoursesScreen()
+      home: AddCourseScreen()
         
     
     );
