@@ -1,6 +1,7 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_section_header.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/attendance_student.dart';
 import 'package:flutter/material.dart';
 
@@ -101,45 +102,14 @@ class GenerateQrScreen extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Registros',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onSurface,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'afjafdksglksdgjlks',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: AppColors.primarySoft,
-                      ),
-                      padding: EdgeInsets.all(7.0),
-                      child: Text(
-                        '21/78',
-                        style: TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: 12),
+                const CustomSectionHeader(
+                  title: 'Registros',
+                  subtitle: 'adjajsksd -10msd',
+                  badgeText: '21/54',
                 ),
-                SizedBox(height: 12),
+
+                const SizedBox(height: 12),
 
                 AttendanceStudent(
                   letter: 'C',

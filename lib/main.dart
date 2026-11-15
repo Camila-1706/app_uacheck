@@ -1,4 +1,3 @@
-
 import 'package:app_uacheck_1/config/constants/app_constants.dart';
 import 'package:app_uacheck_1/config/router/app_router.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
@@ -8,51 +7,49 @@ import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart
 import 'package:app_uacheck_1/presentation/screens/teacher/add_course_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/course_detail_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/generate_qr_screen.dart';
+import 'package:app_uacheck_1/presentation/screens/teacher/live_session_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/teacher_courses_screen.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/course_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'config/theme/app_theme.dart';
 
+void main() => runApp(const MyApp());
 
-// void main() => runApp(const MyApp());
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       theme: AppTheme.light,
-//       debugShowCheckedModeBanner: false,
-//       title: 'Material App',
-//       home: WelcomeScreen()
-        
-    
-//     );
-//   }
-// }
-
-
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(
-    url: 'https://ddtdxnjhsupgvorgdemw.supabase.co',
-    publishableKey: 'sb_publishable_Yrz6YCYvPrG87lJNT_YihA_ve2Crnmc',
-  );
-  runApp(const ProviderScope(child: UACheckApp()));
-}
-
-class UACheckApp extends ConsumerWidget {
-  const UACheckApp({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return MaterialApp.router(
-      title: AppConstants.appName,
-      debugShowCheckedModeBanner: false,
+  Widget build(BuildContext context) {
+    return MaterialApp(
       theme: AppTheme.light,
-      routerConfig: ref.watch(routerProvider),
+      debugShowCheckedModeBanner: false,
+      title: 'Material App',
+      home: LiveSessionScreen(),
     );
   }
 }
+
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Supabase.initialize(
+//     url: 'https://ddtdxnjhsupgvorgdemw.supabase.co',
+//     publishableKey: 'sb_publishable_Yrz6YCYvPrG87lJNT_YihA_ve2Crnmc',
+//   );
+//   runApp(const ProviderScope(child: UACheckApp()));
+// }
+
+// class UACheckApp extends ConsumerWidget {
+//   const UACheckApp({super.key});
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     return MaterialApp.router(
+//       title: AppConstants.appName,
+//       debugShowCheckedModeBanner: false,
+//       theme: AppTheme.light,
+//       routerConfig: ref.watch(routerProvider),
+//     );
+//   }
+// }
