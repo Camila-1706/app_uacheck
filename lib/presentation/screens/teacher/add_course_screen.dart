@@ -114,23 +114,13 @@ class AddCourseScreen extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 16),
-                        OutlinedButton.icon(
+                        CustomButton(
+                          icon: Icons.menu_book_outlined,
+                          text: 'Subir CSV',
+                          isOutlined: true,
                           onPressed: () {},
-                          icon: const Icon(Icons.menu_book_outlined),
-                          label: const Text('Subir CSV'),
-                          style: OutlinedButton.styleFrom(
-                            foregroundColor: Theme.of(context)
-                                .colorScheme
-                                .primary,
-                            side: BorderSide(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            minimumSize: const Size(160, 45),
-                          ),
                         ),
+                        
                       ],
                     ),
                   ),

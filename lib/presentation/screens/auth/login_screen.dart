@@ -1,3 +1,4 @@
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -258,38 +259,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
                           const SizedBox(height: 28.0),
 
-                          ElevatedButton.icon(
+                          CustomButton(
                             onPressed: isLoading ? null : _submitLogin,
-                            icon: isLoading
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : const Icon(Icons.login, size: 20.0),
-                            label: Text(
-                              isLoading ? 'Cargando...' : 'Iniciar sesión',
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              minimumSize: const Size(double.infinity, 50.0),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                            ),
+                            isLoading: isLoading,
+                            icon: Icons.login,
+                            text: isLoading ? 'Cargando...' : 'Iniciar sesión',
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
                           ),
 
                           const SizedBox(height: 32.0),
-
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

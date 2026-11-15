@@ -1,5 +1,6 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -49,44 +50,34 @@ class WelcomeScreen extends StatelessWidget {
                     style: TextStyle(color: AppColors.textMuted),
                   ),
                   SizedBox(height: 25),
-                  OutlinedButton.icon(
+                  CustomButton(
+                    icon: Icons.assignment_ind_outlined,
+                    text: 'Soy Docente',
+                    isOutlined: true,
                     onPressed: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
                     },
-                    icon: Icon(Icons.assignment_ind_outlined),
-                    label: Text('Soy Docente'),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: AppColors.primary,
-                      side: const BorderSide(
-                        color: AppColors.primary,
-                        width: 1.5,
-                      ),
-                      overlayColor: AppColors.primary,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
                   ),
+
                   SizedBox(height: 30),
-                  OutlinedButton.icon(
+
+                  CustomButton(
+                    icon: Icons.school,
+                    text: 'Soy Estudiante',
+                    isOutlined: true,
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
                     },
-                    icon: Icon(Icons.school),
-                    label: Text('Soy Estudiante'),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: AppColors.primary,
-                      side: const BorderSide(
-                        color: AppColors.primary,
-                        width: 1.5,
-                      ),
-                      overlayColor: AppColors.primary,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
                   ),
                 ],
               ),

@@ -1,3 +1,4 @@
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -313,38 +314,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
 
                           const SizedBox(height: 28.0),
-
-                          ElevatedButton.icon(
+                          CustomButton(
                             onPressed: isLoading ? null : _submitRegister,
-                            icon: isLoading
-                                ? const SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
-                                    ),
-                                  )
-                                : const Icon(
-                                    Icons.person_add_alt_1_outlined,
-                                    size: 20.0,
-                                  ),
-                            label: Text(
-                              isLoading ? 'Registrando...' : 'Registrarse',
-                              style: const TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primary,
-                              foregroundColor: Colors.white,
-                              minimumSize: const Size(double.infinity, 50.0),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                            ),
+                            isLoading: isLoading,
+                            icon: Icons.person_add_alt_1_outlined,
+                            text: isLoading ? 'Registrando...' : 'Registrarse',
+                            backgroundColor: AppColors.primary,
+                            foregroundColor: Colors.white,
                           ),
 
                           const SizedBox(height: 28.0),
