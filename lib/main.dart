@@ -3,6 +3,7 @@ import 'package:app_uacheck_1/config/router/app_router.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/register_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/auth/welcome_screen.dart';
+import 'package:app_uacheck_1/presentation/screens/home/home_student_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/profile/profile_teacher_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/add_course_screen.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: ProfileScreen(),
+      home: HomeStudentScreen(),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 
 class HomeStudentScreen extends StatelessWidget {
@@ -7,52 +8,66 @@ class HomeStudentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold( 
-      appBar: CustomAppBar(title: 'Inicio Estudiante',),
+    return Scaffold(
+      appBar: CustomAppBar(title: 'Inicio Estudiante'),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              
-              Text('FeCHA'),
-              Text('HOLAAA'),
-              Container(
-                padding: EdgeInsets.all(3.0),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Buen día,', style: TextStyle(color: AppColors.textMuted)),
+                Text(
+                  'Alan Brito Delgado',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.primaryDark,
+                  ),
 
-                child: Column(
-                  children: [
-                    const Text('PRÓXIMA SESIÓN'),
-                    Text('CLASEEE PENDIENTE'),
-                    Text('HORAA PENDIENTE'),
-                    Container(
-                      decoration: BoxDecoration(color: AppColors.primaryOnDark ),
-                      child: Row(
-                      children: [
-                        Icon (Icons.arrow_circle_right),
-                        Text('Iniciar toma de asistencia', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
-                      ],
-                    )),
-                    SizedBox(height: 15,),
-                    Text('Resumen del día', style: TextStyle( color: AppColors.darkBackground, fontSize: 10, fontWeight: FontWeight.bold),),
-                    Row(children: [
-                      Container(
-                        color: Colors.white,
+                  child: Row(
+                    children: [
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircularProgressIndicator(
+                            value: 0.91,
+                            strokeWidth: 7,
+                            color: AppColors.success,
+                            backgroundColor: Colors.greenAccent,
+                          ),
+                          Text('91%'),
+                        ],
+                      ),
+                      Spacer(),
+                      Expanded(
                         child: Column(
-                          children: [
-                            
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('ASISTENCIA GENERAL'),
+                          Text('¡Vas muy bien este semestre!'),
+                          Text('64 presentes de 70'),
 
-                          ],),)
-                    ],)
-                    
-
-                  ],),)
-
-          ]),
+                        
+                        ],)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
+      bottomNavigationBar: CustomBottomNavigation(indexActual: 0),
     );
   }
 }
