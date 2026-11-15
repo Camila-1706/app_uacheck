@@ -41,7 +41,7 @@ class AttendanceStudent extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(14.0),
-        border: Border.all(color: const Color.fromARGB(31, 149, 149, 149)),
+        border: Border.all(color: const Color.fromARGB(31, 44, 42, 42)),
       ),
       child: Row(
         children: [

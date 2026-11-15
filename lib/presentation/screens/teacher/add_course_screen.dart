@@ -1,5 +1,6 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
@@ -135,19 +136,14 @@ class AddCourseScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
 
-                  ElevatedButton.icon(
+                  CustomButton(
+                    icon: Icons.add,
+                    text: 'Guardar materia',
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
                     onPressed: () {},
-                    icon: const Icon(Icons.add),
-                    label: const Text('Guardar materia'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
                   ),
+
                   const SizedBox(height: 12),
                   Center(
                     child: TextButton(

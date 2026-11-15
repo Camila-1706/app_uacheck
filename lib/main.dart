@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.light,
       debugShowCheckedModeBanner: false,
       title: 'Material App',
-      home: GenerateQrScreen()
+      home: AddCourseScreen()
         
     
     );

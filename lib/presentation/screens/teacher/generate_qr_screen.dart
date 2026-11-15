@@ -1,5 +1,6 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/attendance_student.dart';
 import 'package:flutter/material.dart';
 
@@ -171,23 +172,12 @@ class GenerateQrScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
-        child: ElevatedButton.icon(
-          icon: Icon(Icons.rectangle_outlined, color: Colors.white),
-          label: Text(
-            'Finalizar sesión',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        
+        child: CustomButton(
+          icon: Icons.rectangle_outlined,
+          text: 'Finalizar sesión',
+          backgroundColor: AppColors.danger,
+          foregroundColor: Colors.white,
           onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-            backgroundColor: AppColors.danger,
-            foregroundColor: Colors.white,
-            minimumSize: const Size(double.infinity, 50),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-          ),
         ),
       ),
     );
