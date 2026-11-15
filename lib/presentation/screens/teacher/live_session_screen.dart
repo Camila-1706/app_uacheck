@@ -2,7 +2,7 @@ import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_section_header.dart';
-import 'package:app_uacheck_1/presentation/widgets/teacher/attendance_student.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_attendance_student.dart';
 import 'package:flutter/material.dart';
 
 class LiveSessionScreen extends StatelessWidget {
