@@ -1,5 +1,6 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
+import 'package:app_uacheck_1/presentation/widgets/teacher/attendance_student.dart';
 import 'package:flutter/material.dart';
 
 class GenerateQrScreen extends StatelessWidget {
@@ -78,13 +79,113 @@ class GenerateQrScreen extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
-                    value: 0.6, 
+                    value: 0.6,
                     backgroundColor: AppColors.border,
                     color: Theme.of(context).colorScheme.primary,
                     minHeight: 6,
                   ),
                 ),
+                SizedBox(height: 12),
+
+                Center(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.blueGrey,
+                    ),
+                    height: 240,
+                    width: 240,
+                    padding: EdgeInsets.all(30),
+                    child: Text('QR'),
+                  ),
+                ),
+
+                SizedBox(height: 12),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Registros',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          'afjafdksglksdgjlks',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: AppColors.primarySoft,
+                      ),
+                      padding: EdgeInsets.all(7.0),
+                      child: Text(
+                        '21/78',
+                        style: TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12),
+
+                AttendanceStudent(
+                  letter: 'C',
+                  name: 'Camdjsila',
+                  subtitle: '12235346363 -33:232',
+                  estado: 'Presente',
+                ),
+                AttendanceStudent(
+                  letter: 'C',
+                  name: 'Camdjsila',
+                  subtitle: '12235346363 -33:232',
+                  estado: 'Presente',
+                ),
+                AttendanceStudent(
+                  letter: 'C',
+                  name: 'Camdjsila',
+                  subtitle: '12235346363 -33:232',
+                  estado: 'Presente',
+                ),
+                AttendanceStudent(
+                  letter: 'C',
+                  name: 'Camdjsila',
+                  subtitle: '12235346363 -33:232',
+                  estado: 'Presente',
+                ),
               ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24.0),
+        child: ElevatedButton.icon(
+          icon: Icon(Icons.rectangle_outlined, color: Colors.white),
+          label: Text(
+            'Finalizar sesión',
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+        
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            backgroundColor: AppColors.danger,
+            foregroundColor: Colors.white,
+            minimumSize: const Size(double.infinity, 50),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
         ),

@@ -36,42 +36,47 @@ class AttendanceStudent extends StatelessWidget {
     }
 
     return Container(
+      margin: const EdgeInsets.only(bottom: 10),
       padding: EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.onPrimary,
         borderRadius: BorderRadius.circular(14.0),
-        border: Border.all(
-          color: const Color.fromARGB(31, 149, 149, 149)),
+        border: Border.all(color: const Color.fromARGB(31, 149, 149, 149)),
       ),
-      child: Row(children: [
-        CircleAvatar(
-          backgroundColor: AppColors.primaryOnDark,
-           child: Text('C'),
-
-        ),
-        SizedBox(width: 12,),
-        Expanded(child: 
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-          Text('Nombre estudianre'),
-          Text('Codigo y hora'),
-
-        ],),),
-        Container(
-          color: badgeColor,
-          decoration: BoxDecoration(),
-          child: Row(children: [
-            Icon(estadoIcon),
-            SizedBox(width: 4.0,),
-            Text(estado, style: TextStyle(color: contentColor, fontWeight: FontWeight.bold),),
-          ],),
-        )
-
-      ],),
-
-
-
+      child: Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: AppColors.primaryOnDark,
+            child: Text(letter),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text(name), Text(subtitle)],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: badgeColor),
+            child: Row(
+              children: [
+                Icon(estadoIcon, color: contentColor, size: 16,),
+                SizedBox(width: 4.0),
+                Text(
+                  estado,
+                  style: TextStyle(
+                    color: contentColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
