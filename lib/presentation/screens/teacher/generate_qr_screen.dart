@@ -148,6 +148,7 @@ class GenerateQrScreen extends StatelessWidget {
           backgroundColor: AppColors.danger,
           foregroundColor: Colors.white,
           onPressed: () {},
+          
         ),
       ),
     );

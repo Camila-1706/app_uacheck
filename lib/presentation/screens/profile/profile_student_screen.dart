@@ -4,8 +4,8 @@ import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigati
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_profile_settings.dart';
 import 'package:flutter/material.dart';
 
-class StudentProfileScreen extends StatelessWidget {
-  const StudentProfileScreen({super.key});
+class ProfileStudentScreen extends StatelessWidget {
+  const ProfileStudentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

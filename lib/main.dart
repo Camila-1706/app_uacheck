@@ -9,7 +9,7 @@ import 'package:app_uacheck_1/presentation/screens/profile/profile_teacher_scree
 import 'package:app_uacheck_1/presentation/screens/student/scan_qr_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/student/student_courses_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/student/student_history_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/student/student_profile_screen.dart';
+import 'package:app_uacheck_1/presentation/screens/profile/profile_student_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/add_course_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/course_detail_screen.dart';
 import 'package:app_uacheck_1/presentation/screens/teacher/course_stats_screen.dart';

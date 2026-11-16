@@ -1,12 +1,16 @@
-
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigation extends StatelessWidget {
   final int indexActual;
-  final ValueChanged<int>? onTap;
+  final bool isTeacher;
 
-  const CustomBottomNavigation({super.key, this.indexActual = 0, this.onTap});
+  const CustomBottomNavigation({
+    super.key,
+    this.indexActual = 0,
+    this.isTeacher = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,6 @@ class CustomBottomNavigation extends StatelessWidget {
           top: BorderSide(color: AppColors.border, width: 1),
         ),
       ),
-
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 7.0),
@@ -31,7 +34,6 @@ class CustomBottomNavigation extends StatelessWidget {
                 selectedIcon: Icons.home,
                 label: 'Inicio',
               ),
-
               _buildNav(
                 context: context,
                 index: 1,
@@ -42,9 +44,12 @@ class CustomBottomNavigation extends StatelessWidget {
               _buildNav(
                 context: context,
                 index: 2,
-                icon: Icons.calendar_today_outlined,
-                selectedIcon: Icons.calendar_today,
-                label: 'Historial',
+                icon: isTeacher
+                    ? Icons.bar_chart_outlined
+                    : Icons.calendar_today_outlined,
+                selectedIcon:
+                    isTeacher ? Icons.bar_chart : Icons.calendar_today,
+                label: isTeacher ? 'Estadísticas' : 'Historial',
               ),
               _buildNav(
                 context: context,
@@ -72,7 +77,19 @@ class CustomBottomNavigation extends StatelessWidget {
     final inactiveColor = AppColors.textMuted;
 
     return GestureDetector(
-      onTap: () => onTap?.call(index),
+      onTap: () {
+        if (isTeacher) {
+          if (index == 0) context.go('/teacher/home');
+          if (index == 1) context.go('/teacher/courses');
+          if (index == 2) context.go('/teacher/stats');
+          if (index == 3) context.go('/teacher/profile');
+        } else {
+          if (index == 0) context.go('/student/home');
+          if (index == 1) context.go('/student/courses');
+          if (index == 2) context.go('/student/history');
+          if (index == 3) context.go('/student/profile');
+        }
+      },
       behavior: HitTestBehavior.opaque,
       child: Column(
         mainAxisSize: MainAxisSize.min,
