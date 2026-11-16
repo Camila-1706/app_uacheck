@@ -1,6 +1,6 @@
 # UACheck — Sistema Inteligente de Control de Asistencia Académica
 
-**UACheck** es una aplicación móvil multiplataforma desarrollada en **Flutter** diseñada para optimizar y modernizar el registro y seguimiento de asistencia académica en la **Universidad de la Amazonia**[cite: 9, 11]. Ofrece una experiencia diferenciada y fluida para los roles de **Docente** y **Estudiante**, integrando códigos QR dinámicos, validación de ubicación y reportes estadísticos en tiempo real.
+**UACheck** es una aplicación móvil multiplataforma desarrollada en **Flutter** diseñada para optimizar y modernizar el registro y seguimiento de asistencia académica en la **Universidad de la Amazonia**. Ofrece una experiencia diferenciada y fluida para los roles de **Docente** y **Estudiante**, integrando códigos QR dinámicos, validación de ubicación y reportes estadísticos en tiempo real.
 
 ---
 
@@ -14,11 +14,11 @@
 * **Perfil y Ajustes:** Configuración de cuenta docente, modo oscuro, gestión de caché y soporte.
 
 ### Módulo Estudiante
-* **Panel de Inicio:** Visualización del porcentaje general de asistencia semestral, estado de la clase actual o próxima y progreso individual por materia inscrita[cite: 4].
-* **Escáner QR con Validación GPS:** Registro rápido de asistencia escaneando el código QR proyectado en el aula[cite: 8].
-* **Carné Digital Institucional:** Identificación estudiantil digital con código QR personal dinámico como respaldo de registro[cite: 9].
-* **Horario de Clases:** Consulta de asignaturas del día con aulas, docentes y horarios asignados[cite: 7].
-* **Historial Cronológico:** Registro detallado de asistencias con filtros (*Todas*, *Este mes*, *Por materia*) y contadores acumulados[cite: 6].
+* **Panel de Inicio:** Visualización del porcentaje general de asistencia semestral, estado de la clase actual o próxima y progreso individual por materia inscrita.
+* **Escáner QR con Validación GPS:** Registro rápido de asistencia escaneando el código QR proyectado en el aula.
+* **Carné Digital Institucional:** Identificación estudiantil digital con código QR personal dinámico como respaldo de registro.
+* **Horario de Clases:** Consulta de asignaturas del día con aulas, docentes y horarios asignados.
+* **Historial Cronológico:** Registro detallado de asistencias con filtros (*Todas*, *Este mes*, *Por materia*) y contadores acumulados.
 
 ---
 
@@ -38,28 +38,66 @@
 lib/
 ├── config/
 │   ├── constants/        # Constantes globales de la aplicación
-│   ├── helpers/          # Extensiones de contexto, excepciones y validadores[cite: 11]
-│   ├── router/           # Configuración centralizada de rutas con GoRouter[cite: 11]
-│   └── theme/            # Paleta de colores (AppColors) y temas (AppTheme)[cite: 11]
+│   ├── helpers/          # Extensiones de contexto, excepciones y validadores
+│   ├── router/           # Configuración centralizada de rutas con GoRouter
+│   └── theme/            # Paleta de colores (AppColors) y temas (AppTheme)
 ├── domain/
-│   ├── datasources/      # Contratos de fuentes de datos[cite: 11]
-│   ├── entities/         # Entidades puras del negocio (User, etc.)[cite: 11]
-│   └── repositories/     # Contratos de repositorios[cite: 11]
+│   ├── datasources/      # Contratos de fuentes de datos
+│   ├── entities/         # Entidades puras del negocio (User, etc.)
+│   └── repositories/     # Contratos de repositorios
 ├── infrastructure/
-│   ├── datasources/      # Implementación con Supabase[cite: 11]
-│   ├── mappers/          # Transformación entre modelos y entidades[cite: 11]
-│   ├── models/           # Modelos de serialización (JSON)[cite: 11]
-│   └── repositories/     # Implementación de repositorios[cite: 11]
+│   ├── datasources/      # Implementación con Supabase
+│   ├── mappers/          # Transformación entre modelos y entidades
+│   ├── models/           # Modelos de serialización (JSON)
+│   └── repositories/     # Implementación de repositorios
 ├── presentation/
-│   ├── providers/        # Providers de Riverpod (Auth, Roles, Repositorios)[cite: 11]
+│   ├── providers/        # Providers de Riverpod (Auth, Roles, Repositorios)
 │   ├── screens/
-│   │   ├── auth/         # Welcome, Login, Register, Forgot Password[cite: 11]
-│   │   ├── home/         # Vistas principales para Docente y Estudiante[cite: 11]
-│   │   ├── profile/      # Perfil y configuración docente[cite: 11]
-│   │   ├── student/      # Clases, Escáner QR, Historial y Carné Digital[cite: 11]
-│   │   └── teacher/      # Cursos, Detalle, Sesión en Vivo, QR y Estadísticas[cite: 11]
+│   │   ├── auth/         # Welcome, Login, Register, Forgot Password
+│   │   ├── home/         # Vistas principales para Docente y Estudiante
+│   │   ├── profile/      # Perfil y configuración docente
+│   │   ├── student/      # Clases, Escáner QR, Historial y Carné Digital
+│   │   └── teacher/      # Cursos, Detalle, Sesión en Vivo, QR y Estadísticas
 │   └── widgets/
-│       ├── shared/       # Componentes reutilizables globales (AppBar, Nav, Buttons, etc.)[cite: 11]
-│       ├── student/      # Widgets exclusivos del módulo estudiante[cite: 11]
-│       └── teacher/      # Widgets exclusivos del módulo docente[cite: 11]
-└── main.dart             # Punto de entrada de la aplicación[cite: 11]
+│       ├── shared/       # Componentes reutilizables globales (AppBar, Nav, Buttons, etc.)
+│       ├── student/      # Widgets exclusivos del módulo estudiante
+│       └── teacher/      # Widgets exclusivos del módulo docente
+└── main.dart             # Punto de entrada de la aplicación
+
+
+Requisitos Previos
+Flutter SDK (versión 3.x o superior)
+
+Dart SDK compatible
+
+Un editor de código como Visual Studio Code o Android Studio
+
+Un emulador Android/iOS, navegador web o dispositivo físico conectado
+
+Cuenta y proyecto activo en Supabase
+
+Instalación y Ejecución Local
+Clonar el repositorio:
+
+Bash
+git clone [https://github.com/Camila-1706/app_uacheck.git](https://github.com/Camila-1706/app_uacheck.git)
+cd app_uacheck
+Instalar dependencias:
+
+Bash
+flutter pub get
+Configurar variables de entorno (Supabase):
+Crea un archivo .env en la raíz del proyecto con las credenciales de tu proyecto en Supabase:
+
+Fragmento de código
+SUPABASE_URL=tu_supabase_url
+SUPABASE_ANON_KEY=tu_supabase_anon_key
+Verificar dispositivos disponibles y ejecutar la aplicación:
+
+Bash
+flutter devices
+flutter run
+
+
+Autora
+Laura Camila Álvarez Rojas
