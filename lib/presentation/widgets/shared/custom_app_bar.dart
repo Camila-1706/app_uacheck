@@ -2,6 +2,7 @@
 
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -31,9 +32,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   Icons.chevron_left,
                   color: Theme.of(context).colorScheme.primary,
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed:
+                    onBackTap ??
+                    () {
+                      if (context.canPop()) {
+                        context.pop();
+                      }
+                    },
               ),
 
             Image.asset('assets/images/logo_icon.png', width: 50, height: 50),

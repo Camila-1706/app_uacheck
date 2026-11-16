@@ -3,6 +3,7 @@ import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddCourseScreen extends StatelessWidget {
   const AddCourseScreen({super.key});
@@ -137,7 +138,7 @@ class AddCourseScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   Center(
                     child: TextButton(
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () => context.pop(),
                       child: const Text(
                         'Cancelar y volver',
                         style: TextStyle(

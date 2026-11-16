@@ -1,5 +1,5 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
-import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
+import 'package:go_router/go_router.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
 
@@ -54,14 +54,7 @@ class WelcomeScreen extends StatelessWidget {
                     icon: Icons.assignment_ind_outlined,
                     text: 'Soy Docente',
                     isOutlined: true,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
+                    onPressed: () => context.go('/teacher/home'),
                   ),
 
                   SizedBox(height: 30),
@@ -70,14 +63,7 @@ class WelcomeScreen extends StatelessWidget {
                     icon: Icons.school,
                     text: 'Soy Estudiante',
                     isOutlined: true,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
+                    onPressed: () => context.go('/student/home'),
                   ),
                 ],
               ),

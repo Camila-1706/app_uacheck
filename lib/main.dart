@@ -1,41 +1,26 @@
-import 'package:app_uacheck_1/config/constants/app_constants.dart';
 import 'package:app_uacheck_1/config/router/app_router.dart';
-import 'package:app_uacheck_1/presentation/screens/auth/login_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/auth/register_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/auth/welcome_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/home/home_student_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/home/home_teacher_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/profile/profile_teacher_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/student/scan_qr_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/student/student_courses_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/student/student_history_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/profile/profile_student_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/add_course_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/course_detail_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/course_stats_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/generate_qr_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/live_session_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/student_list_screen.dart';
-import 'package:app_uacheck_1/presentation/screens/teacher/teacher_courses_screen.dart';
-import 'package:app_uacheck_1/presentation/widgets/teacher/course_card.dart';
+import 'package:app_uacheck_1/config/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'config/theme/app_theme.dart';
-
-void main() => runApp(const MyApp());
+void main() {
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: AppTheme.light,
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Material App',
-      home: TeacherCoursesScreen(),
+      title: 'UACheck',
+      theme: AppTheme.light,
+      routerConfig: appRouter,
     );
   }
 }
@@ -61,3 +46,4 @@ class MyApp extends StatelessWidget {
 //     );
 //   }
 // }
+

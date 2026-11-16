@@ -1,4 +1,5 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
+import 'package:app_uacheck_1/presentation/screens/profile/profile_dialogs.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigation.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_profile_settings.dart';
@@ -20,8 +21,7 @@ class ProfileTeacherScreen extends StatelessWidget {
                 Text(
                   'Cuenta Docente',
                   textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: AppColors.textMuted, fontSize: 13,),
+                  style: TextStyle(color: AppColors.textMuted, fontSize: 13),
                 ),
                 const SizedBox(height: 10),
                 Container(
@@ -91,10 +91,10 @@ class ProfileTeacherScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 12,),
-                const CustomProfileSettings(),
-
-
+                const SizedBox(height: 12),
+                CustomProfileSettings(
+                  onLogout: () => ProfileDialogs.showLogoutDialog(context),
+                ),
               ],
             ),
           ),

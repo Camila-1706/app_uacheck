@@ -4,6 +4,7 @@ import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigati
 import 'package:app_uacheck_1/presentation/widgets/teacher/schedule_title.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/summary_card.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeTeacherScreen extends StatelessWidget {
   const HomeTeacherScreen({super.key});
@@ -89,7 +90,7 @@ class HomeTeacherScreen extends StatelessWidget {
                           backgroundColor: AppColors.success,
                           foregroundColor: AppColors.background,
                         ),
-                        onPressed: () {},
+                        onPressed: () => context.push('/teacher/live-session'),
                         icon: Icon(Icons.play_circle_fill),
                         label: Text('Iniciar toma de asistencia'),
                       ),

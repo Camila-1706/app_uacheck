@@ -3,6 +3,7 @@ import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigation.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StudentCoursesScreen extends StatelessWidget {
   const StudentCoursesScreen({super.key});
@@ -131,7 +132,7 @@ class StudentCoursesScreen extends StatelessWidget {
                         icon: Icons.qr_code_scanner,
                         backgroundColor: AppColors.primaryDark,
                         foregroundColor: Colors.white,
-                        onPressed: () {},
+                        onPressed: () => context.push('/student/scan-qr'),
                       ),
                     ],
                   ),

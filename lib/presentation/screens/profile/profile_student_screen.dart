@@ -1,4 +1,5 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
+import 'package:app_uacheck_1/presentation/screens/profile/profile_dialogs.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigation.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_profile_settings.dart';
@@ -178,7 +179,9 @@ class ProfileStudentScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 18),
-                const CustomProfileSettings(),
+                CustomProfileSettings(
+                  onLogout: () => ProfileDialogs.showLogoutDialog(context),
+                ),
               ],
             ),
           ),

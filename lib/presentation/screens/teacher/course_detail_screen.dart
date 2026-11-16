@@ -2,6 +2,7 @@ import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/quick_action.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   const CourseDetailScreen({super.key});
@@ -87,28 +88,28 @@ class CourseDetailScreen extends StatelessWidget {
                 QuickActionTile(
                   title: 'Generar código QR',
                   icon: Icons.qr_code_2,
-                  onTap: () {},
+                  onTap: () => context.push('/teacher/generate-qr'), 
                 ),
 
                 QuickActionTile(
                   title: 'Cargar listado (CSV)',
                   subtitle: 'Importa o actualiza estudiantes',
                   icon: Icons.file_upload_outlined,
-                  onTap: () {},
+                  onTap: () => context.push('/teacher/student-list'),
                 ),
 
                 QuickActionTile(
                   title: 'Tomar asistencia',
                   subtitle: 'Inicia una sesión con QR',
                   icon: Icons.crop_free,
-                  onTap: () {},
+                  onTap: () => context.push('/teacher/live-session'),
                 ),
 
                 QuickActionTile(
                   title: 'Estadísticas',
                   subtitle: 'Consulta rendimiento y tendencias',
                   icon: Icons.show_chart,
-                  onTap: () {},
+                  onTap: () => context.push('/teacher/stats'), 
                 ),
 
                 const SizedBox(height: 12),
