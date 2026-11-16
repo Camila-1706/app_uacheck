@@ -63,41 +63,47 @@ lib/
 │       ├── student/      # Widgets exclusivos del módulo estudiante
 │       └── teacher/      # Widgets exclusivos del módulo docente
 └── main.dart             # Punto de entrada de la aplicación
+```
+
+---
+
+## Requisitos Previos
+
+* **Flutter SDK** (versión 3.x o superior)
+* **Dart SDK** compatible
+* Un editor de código como **Visual Studio Code** o **Android Studio**
+* Un emulador Android/iOS, navegador web o dispositivo físico conectado
+* Cuenta y proyecto activo en **Supabase**
+
+---
+
+## Instalación y Ejecución Local
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/Camila-1706/app_uacheck.git
+   cd app_uacheck
+   ```
+
+2. **Instalar dependencias:**
+   ```bash
+   flutter pub get
+   ```
+
+3. **Configurar variables de entorno (Supabase):**
+   Crea un archivo `.env` en la raíz del proyecto con las credenciales de tu proyecto en Supabase:
+   ```env
+   SUPABASE_URL=tu_supabase_url
+   SUPABASE_ANON_KEY=tu_supabase_anon_key
+   ```
+
+4. **Verificar dispositivos disponibles y ejecutar la aplicación:**
+   ```bash
+   flutter devices
+   flutter run
+   ```
 
 
-Requisitos Previos
-Flutter SDK (versión 3.x o superior)
+## Autora
 
-Dart SDK compatible
-
-Un editor de código como Visual Studio Code o Android Studio
-
-Un emulador Android/iOS, navegador web o dispositivo físico conectado
-
-Cuenta y proyecto activo en Supabase
-
-Instalación y Ejecución Local
-Clonar el repositorio:
-
-Bash
-git clone [https://github.com/Camila-1706/app_uacheck.git](https://github.com/Camila-1706/app_uacheck.git)
-cd app_uacheck
-Instalar dependencias:
-
-Bash
-flutter pub get
-Configurar variables de entorno (Supabase):
-Crea un archivo .env en la raíz del proyecto con las credenciales de tu proyecto en Supabase:
-
-Fragmento de código
-SUPABASE_URL=tu_supabase_url
-SUPABASE_ANON_KEY=tu_supabase_anon_key
-Verificar dispositivos disponibles y ejecutar la aplicación:
-
-Bash
-flutter devices
-flutter run
-
-
-Autora
-Laura Camila Álvarez Rojas
+* **Laura Camila Álvarez Rojas**
