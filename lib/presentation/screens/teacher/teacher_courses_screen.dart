@@ -1,16 +1,31 @@
+import 'package:app_uacheck_1/config/helpers/app_exception.dart';
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
+import 'package:app_uacheck_1/domain/entities/course.dart';
+import 'package:app_uacheck_1/presentation/providers/providers.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigation.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:app_uacheck_1/presentation/widgets/teacher/course_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class TeacherCoursesScreen extends StatelessWidget {
+class TeacherCoursesScreen extends ConsumerStatefulWidget {
   const TeacherCoursesScreen({super.key});
 
   @override
+  ConsumerState<TeacherCoursesScreen> createState() =>
+      _TeacherCoursesScreenState();
+}
+
+class _TeacherCoursesScreenState extends ConsumerState<TeacherCoursesScreen> {
+  // Lo que el docente escribe en el buscador (en minúsculas)
+  String _query = '';
+
+  @override
   Widget build(BuildContext context) {
+    final coursesAsync = ref.watch(teacherCoursesProvider);
+
     return Scaffold(
       appBar: const CustomAppBar(title: 'UACheck'),
       body: SafeArea(
@@ -31,6 +46,9 @@ class TeacherCoursesScreen extends StatelessWidget {
 
                 const SizedBox(height: 16),
                 TextField(
+                  onChanged: (value) {
+                    setState(() => _query = value.trim().toLowerCase());
+                  },
                   decoration: InputDecoration(
                     hintText: 'Buscar',
                     prefixIcon: const Icon(
@@ -74,37 +92,14 @@ class TeacherCoursesScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 14),
-                GestureDetector(
-                  onTap: () => context.push('/teacher/course-detail'),
-                  child: const CourseCard(
-                    title: 'Ingeniería de Software - GR1',
-                    code: 'ISW-601',
-                    schedule: 'Mar/Jue 10:00',
-                    classroom: 'B-204',
-                    studentsCount: 32,
+
+                coursesAsync.when(
+                  loading: () => const Padding(
+                    padding: EdgeInsets.all(32),
+                    child: Center(child: CircularProgressIndicator()),
                   ),
-                ),
-                const SizedBox(height: 12),
-                GestureDetector(
-                  onTap: () => context.push('/teacher/course-detail'),
-                  child: const CourseCard(
-                    title: 'Bases de Datos II - GR2',
-                    code: 'BD-502',
-                    schedule: 'Lun/Mié 14:00',
-                    classroom: 'A-105',
-                    studentsCount: 28,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                GestureDetector(
-                  onTap: () => context.push('/teacher/course-detail'),
-                  child: const CourseCard(
-                    title: 'Proyecto de Grado',
-                    code: 'PG-901',
-                    schedule: 'Viernes 08:00',
-                    classroom: 'Lab 3',
-                    studentsCount: 18,
-                  ),
+                  error: (error, _) => _buildError(error),
+                  data: (courses) => _buildList(courses),
                 ),
 
                 const SizedBox(height: 24),
@@ -127,7 +122,68 @@ class TeacherCoursesScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigation(indexActual: 1, isTeacher: true,),
+      bottomNavigationBar: const CustomBottomNavigation(
+        indexActual: 1,
+        isTeacher: true,
+      ),
+    );
+  }
+
+  Widget _buildError(Object error) {
+    return Column(
+      children: [
+        Text(
+          AppException.messageOf(error),
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: AppColors.danger),
+        ),
+        TextButton(
+          onPressed: () => ref.invalidate(teacherCoursesProvider),
+          child: const Text('Reintentar'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildList(List<Course> courses) {
+    final filtered = courses.where((course) {
+      return course.title.toLowerCase().contains(_query) ||
+          course.code.toLowerCase().contains(_query);
+    }).toList();
+
+    if (filtered.isEmpty) {
+      final message = courses.isEmpty
+          ? 'Aún no tienes materias. Toca "Añadir materia" para crear la primera.'
+          : 'No se encontraron materias con esa búsqueda.';
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 24),
+        child: Center(
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: AppColors.textMuted),
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        for (final course in filtered)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: GestureDetector(
+              onTap: () => context.push('/teacher/course-detail'),
+              child: CourseCard(
+                title: course.title,
+                code: course.code,
+                schedule: course.scheduleText,
+                classroom: course.classroom,
+                studentsCount: course.studentsCount,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

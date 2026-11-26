@@ -1,12 +1,96 @@
+import 'package:app_uacheck_1/config/helpers/app_exception.dart';
+import 'package:app_uacheck_1/config/helpers/context_extensions.dart';
+import 'package:app_uacheck_1/config/helpers/validators.dart';
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
+import 'package:app_uacheck_1/presentation/providers/providers.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-class AddCourseScreen extends StatelessWidget {
+class AddCourseScreen extends ConsumerStatefulWidget {
   const AddCourseScreen({super.key});
+
+  @override
+  ConsumerState<AddCourseScreen> createState() => _AddCourseScreenState();
+}
+
+class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _nameController = TextEditingController();
+  final _codeController = TextEditingController();
+  final _groupController = TextEditingController();
+  final _classroomController = TextEditingController();
+  final _startController = TextEditingController();
+  final _endController = TextEditingController();
+
+  final Set<int> _selectedDays = {};
+
+  static const _dayLabels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _codeController.dispose();
+    _groupController.dispose();
+    _classroomController.dispose();
+    _startController.dispose();
+    _endController.dispose();
+    super.dispose();
+  }
+  Future<void> _pickTime(TextEditingController controller) async {
+    final picked = await showTimePicker(
+      context: context,
+      initialTime: const TimeOfDay(hour: 8, minute: 0),
+    );
+    if (picked == null) return;
+
+    final hour = picked.hour.toString().padLeft(2, '0');
+    final minute = picked.minute.toString().padLeft(2, '0');
+    controller.text = '$hour:$minute';
+  }
+
+  Future<void> _save() async {
+    FocusScope.of(context).unfocus();
+
+    if (!_formKey.currentState!.validate()) return;
+
+    if (_selectedDays.isEmpty) {
+      context.showMessage('Selecciona al menos un día de clase', error: true);
+      return;
+    }
+
+    setState(() => _saving = true);
+
+    try {
+      final days = _selectedDays.toList()..sort();
+
+      await ref.read(courseRepositoryProvider).createCourse(
+            name: _nameController.text,
+            code: _codeController.text,
+            groupName: _groupController.text,
+            classroom: _classroomController.text,
+            days: days,
+            startTime: _startController.text,
+            endTime: _endController.text,
+          );
+
+      ref.invalidate(teacherCoursesProvider);
+
+      if (!mounted) return;
+      context.showMessage('Materia guardada');
+      context.pop();
+    } catch (e) {
+      if (mounted) context.showMessage(AppException.messageOf(e), error: true);
+    } finally {
+      if (mounted) setState(() => _saving = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,48 +101,113 @@ class AddCourseScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Form(
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const CustomTextField(
+                  CustomTextField(
+                    controller: _nameController,
                     label: 'Nombre',
                     hintText: 'Nombre de la materia',
                     prefixIcon: Icons.menu_book_outlined,
+                    validator: (v) => Validators.required(v, 'El nombre'),
                   ),
 
                   const SizedBox(height: 14),
-                  const Row(
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: CustomTextField(
+                          controller: _startController,
                           label: 'Hora Inicio',
                           hintText: '08:00',
-                          prefixIcon: Icons.menu_book_outlined,
+                          prefixIcon: Icons.access_time,
+                          readOnly: true,
+                          onTap: () => _pickTime(_startController),
+                          validator: (v) => Validators.required(v, 'La hora'),
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: CustomTextField(
+                          controller: _endController,
                           label: 'Hora fin',
                           hintText: '09:30',
-                          prefixIcon: Icons.menu_book_outlined,
+                          prefixIcon: Icons.access_time,
+                          readOnly: true,
+                          onTap: () => _pickTime(_endController),
+                          validator: (v) => Validators.required(v, 'La hora'),
                         ),
                       ),
                     ],
                   ),
+
                   const SizedBox(height: 14),
-                  const Row(
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: CustomTextField(
+                          controller: _groupController,
                           label: 'Grupo',
                           hintText: 'Ej. GR1',
                           prefixIcon: Icons.people_outlined,
+                          validator: Validators.group,
                         ),
                       ),
-                      Spacer(),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: CustomTextField(
+                          controller: _codeController,
+                          label: 'Código (opcional)',
+                          hintText: 'Ej. ISW-601',
+                          prefixIcon: Icons.tag,
+                        ),
+                      ),
                     ],
                   ),
+
+                  const SizedBox(height: 14),
+                  CustomTextField(
+                    controller: _classroomController,
+                    label: 'Aula',
+                    hintText: 'Ej. B-204',
+                    prefixIcon: Icons.home_outlined,
+                    validator: (v) => Validators.required(v, 'El aula'),
+                  ),
+
+                  const SizedBox(height: 14),
+                  Text(
+                    'Días de clase',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: [
+                      for (var i = 0; i < _dayLabels.length; i++)
+                        FilterChip(
+                          label: Text(_dayLabels[i]),
+                          // El día número es i + 1 (lunes = 1)
+                          selected: _selectedDays.contains(i + 1),
+                          onSelected: (selected) {
+                            setState(() {
+                              if (selected) {
+                                _selectedDays.add(i + 1);
+                              } else {
+                                _selectedDays.remove(i + 1);
+                              }
+                            });
+                          },
+                        ),
+                    ],
+                  ),
+
                   const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,7 +270,6 @@ class AddCourseScreen extends StatelessWidget {
                           isOutlined: true,
                           onPressed: () {},
                         ),
-                        
                       ],
                     ),
                   ),
@@ -129,10 +277,11 @@ class AddCourseScreen extends StatelessWidget {
 
                   CustomButton(
                     icon: Icons.add,
-                    text: 'Guardar materia',
+                    text: _saving ? 'Guardando...' : 'Guardar materia',
+                    isLoading: _saving,
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: _saving ? null : _save,
                   ),
 
                   const SizedBox(height: 12),
