@@ -35,7 +35,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     // Si por alguna razón no eligió rol, la devolvemos al inicio
     if (role == null) {
-      context.go('/');
+      context.go('/welcome');
       return;
     }
 

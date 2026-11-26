@@ -1,13 +1,16 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:app_uacheck_1/domain/entities/user.dart';
+import 'package:app_uacheck_1/presentation/providers/providers.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -54,7 +57,11 @@ class WelcomeScreen extends StatelessWidget {
                     icon: Icons.assignment_ind_outlined,
                     text: 'Soy Docente',
                     isOutlined: true,
-                    onPressed: () => context.go('/teacher/home'),
+                    onPressed: () {
+                      ref.read(selectedRoleProvider.notifier).state =
+                          UserRole.teacher;
+                      context.push('/login');
+                    },
                   ),
 
                   SizedBox(height: 30),
@@ -63,7 +70,11 @@ class WelcomeScreen extends StatelessWidget {
                     icon: Icons.school,
                     text: 'Soy Estudiante',
                     isOutlined: true,
-                    onPressed: () => context.go('/student/home'),
+                    onPressed: () {
+                      ref.read(selectedRoleProvider.notifier).state =
+                          UserRole.student;
+                      context.push('/login');
+                    },
                   ),
                 ],
               ),

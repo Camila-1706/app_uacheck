@@ -1,6 +1,8 @@
 import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:app_uacheck_1/presentation/providers/providers.dart';
 
 class ProfileDialogs {
   static void showClearCacheDialog(BuildContext context) {
@@ -80,8 +82,10 @@ class ProfileDialogs {
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: AppColors.danger),
             onPressed: () {
+              final container = ProviderScope.containerOf(context);
               context.pop();
-              context.go('/welcome');
+              container.read(authProvider.notifier).logout();
+              
             },
             child: const Text('Salir'),
           ),
