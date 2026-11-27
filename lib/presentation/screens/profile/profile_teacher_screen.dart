@@ -100,7 +100,10 @@ class ProfileTeacherScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigation(indexActual: 3),
+      bottomNavigationBar: const CustomBottomNavigation(
+        indexActual: 3,
+        isTeacher: true,
+      ),
     );
   }
 }

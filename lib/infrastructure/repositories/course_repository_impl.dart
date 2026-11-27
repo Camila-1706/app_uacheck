@@ -1,3 +1,6 @@
+import 'package:app_uacheck_1/domain/entities/enroll_result.dart';
+import 'package:app_uacheck_1/domain/entities/imported_student.dart';
+
 import '../../config/helpers/app_exception.dart';
 import '../../config/helpers/validators.dart';
 import '../../domain/datasources/course_datasource.dart';
@@ -12,7 +15,7 @@ class CourseRepositoryImpl implements CourseRepository {
   Future<List<Course>> getTeacherCourses() => datasource.getTeacherCourses();
 
   @override
-  Future<void> createCourse({
+  Future<String> createCourse({
     required String name,
     required String code,
     required String groupName,
@@ -28,7 +31,7 @@ class CourseRepositoryImpl implements CourseRepository {
     final rangeError = Validators.timeRange(startTime, endTime);
     if (rangeError != null) throw AppException(rangeError);
 
-    await datasource.createCourse(
+    return datasource.createCourse(
       name: name,
       code: code,
       groupName: groupName,
@@ -36,6 +39,28 @@ class CourseRepositoryImpl implements CourseRepository {
       days: days,
       startTime: startTime,
       endTime: endTime,
+    );
+  }
+
+  @override
+  Future<EnrollResult> enrollStudents({
+    required String courseId,
+    required List<ImportedStudent> students,
+  }) async {
+    final byCode = <String, ImportedStudent>{};
+    for (final student in students) {
+      if (Validators.userCode(student.code) == null) {
+        byCode[student.code] = student;
+      }
+    }
+
+    if (byCode.isEmpty) {
+      throw const AppException('No hay estudiantes válidos para matricular.');
+    }
+
+    return datasource.enrollStudents(
+      courseId: courseId,
+      students: byCode.values.toList(),
     );
   }
 }

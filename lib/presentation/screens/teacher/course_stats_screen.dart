@@ -2,6 +2,7 @@ import 'package:app_uacheck_1/config/theme/app_colors.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_app_bar.dart';
 import 'package:app_uacheck_1/presentation/widgets/shared/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:app_uacheck_1/presentation/widgets/shared/custom_bottom_navigation.dart';
 
 class CourseStatsScreen extends StatefulWidget {
   const CourseStatsScreen({super.key});

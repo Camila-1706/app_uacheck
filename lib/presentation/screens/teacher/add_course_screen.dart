@@ -9,6 +9,9 @@ import 'package:app_uacheck_1/presentation/widgets/shared/custom_text_field.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:app_uacheck_1/config/helpers/csv_helper.dart';
+import 'package:app_uacheck_1/config/helpers/student_import_helper.dart';
+import 'package:app_uacheck_1/presentation/widgets/teacher/import_summary.dart';
 
 class AddCourseScreen extends ConsumerStatefulWidget {
   const AddCourseScreen({super.key});
@@ -32,6 +35,7 @@ class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
   static const _dayLabels = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
   bool _saving = false;
+  StudentImportResult? _importResult;
 
   @override
   void dispose() {
@@ -43,6 +47,7 @@ class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
     _endController.dispose();
     super.dispose();
   }
+
   Future<void> _pickTime(TextEditingController controller) async {
     final picked = await showTimePicker(
       context: context,
@@ -55,9 +60,20 @@ class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
     controller.text = '$hour:$minute';
   }
 
+  Future<void> _pickCsv() async {
+    try {
+      final result = await StudentImportHelper.pickAndParse();
+      if (result == null) return;
+
+      if (!mounted) return;
+      setState(() => _importResult = result);
+    } catch (e) {
+      if (mounted) context.showMessage(AppException.messageOf(e), error: true);
+    }
+  }
+
   Future<void> _save() async {
     FocusScope.of(context).unfocus();
-
     if (!_formKey.currentState!.validate()) return;
 
     if (_selectedDays.isEmpty) {
@@ -68,22 +84,41 @@ class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
     setState(() => _saving = true);
 
     try {
+      final repo = ref.read(courseRepositoryProvider);
       final days = _selectedDays.toList()..sort();
 
-      await ref.read(courseRepositoryProvider).createCourse(
-            name: _nameController.text,
-            code: _codeController.text,
-            groupName: _groupController.text,
-            classroom: _classroomController.text,
-            days: days,
-            startTime: _startController.text,
-            endTime: _endController.text,
+      final courseId = await repo.createCourse(
+        name: _nameController.text,
+        code: _codeController.text,
+        groupName: _groupController.text,
+        classroom: _classroomController.text,
+        days: days,
+        startTime: _startController.text,
+        endTime: _endController.text,
+      );
+
+      var message = 'Materia guardada';
+      final students = _importResult?.students ?? [];
+
+      if (students.isNotEmpty) {
+        try {
+          final result = await repo.enrollStudents(
+            courseId: courseId,
+            students: students,
           );
+          message = 'Materia guardada con ${result.total} estudiantes';
+        } catch (e) {
+          // La materia ya existe; solo falló la carga de estudiantes
+          message =
+              'Materia guardada, pero no se pudieron cargar los '
+              'estudiantes: ${AppException.messageOf(e)}';
+        }
+      }
 
       ref.invalidate(teacherCoursesProvider);
 
       if (!mounted) return;
-      context.showMessage('Materia guardada');
+      context.showMessage(message);
       context.pop();
     } catch (e) {
       if (mounted) context.showMessage(AppException.messageOf(e), error: true);
@@ -230,9 +265,9 @@ class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(color: AppColors.border),
                         ),
-                        child: const Text(
-                          '0 estudiantes cargados',
-                          style: TextStyle(
+                        child: Text(
+                          '${_importResult?.students.length ?? 0} estudiantes cargados',
+                          style: const TextStyle(
                             fontSize: 11,
                             color: AppColors.textMuted,
                             fontWeight: FontWeight.w500,
@@ -266,10 +301,16 @@ class _AddCourseScreenState extends ConsumerState<AddCourseScreen> {
                         const SizedBox(height: 16),
                         CustomButton(
                           icon: Icons.menu_book_outlined,
-                          text: 'Subir CSV',
+                          text: _importResult == null
+                              ? 'Subir CSV'
+                              : 'Cambiar archivo',
                           isOutlined: true,
-                          onPressed: () {},
+                          onPressed: _pickCsv,
                         ),
+                        if (_importResult != null) ...[
+                          const SizedBox(height: 8),
+                          ImportSummary(result: _importResult!),
+                        ],
                       ],
                     ),
                   ),

@@ -48,7 +48,7 @@ class HomeTeacherScreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     color: Theme.of(context).colorScheme.primary,
                   ),
-        
+
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -84,7 +84,7 @@ class HomeTeacherScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 10),
-        
+
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.success,
@@ -97,7 +97,7 @@ class HomeTeacherScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-        
+
                 SizedBox(height: 15),
                 Text(
                   'Resumen del día',
@@ -119,7 +119,7 @@ class HomeTeacherScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 10),
-        
+
                     Expanded(
                       child: SummaryCard(
                         color: AppColors.primaryOnDark,
@@ -161,7 +161,10 @@ class HomeTeacherScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: CustomBottomNavigation(),
+      bottomNavigationBar: const CustomBottomNavigation(
+        indexActual: 0,
+        isTeacher: true,
+      ),
     );
   }
 }

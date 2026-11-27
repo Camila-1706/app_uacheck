@@ -1,3 +1,5 @@
+import 'package:app_uacheck_1/domain/entities/enroll_result.dart';
+import 'package:app_uacheck_1/domain/entities/imported_student.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -37,7 +39,7 @@ class SupabaseCourseDatasource implements CourseDatasource {
   }
 
   @override
-  Future<void> createCourse({
+  Future<String> createCourse({
     required String name,
     required String code,
     required String groupName,
@@ -47,29 +49,92 @@ class SupabaseCourseDatasource implements CourseDatasource {
     required String endTime,
   }) async {
     try {
-      await _client.from('courses').insert({
-        'teacher_id': _teacherId,
-        'name': name.trim(),
-        'code': code.trim(),
-        'group_name': groupName.trim(),
-        'classroom': classroom.trim(),
-        'days': days,
-        'start_time': startTime,
-        'end_time': endTime,
-      });
+      final row = await _client
+          .from('courses')
+          .insert({
+            'teacher_id': _teacherId,
+            'name': name.trim(),
+            'code': code.trim(),
+            'group_name': groupName.trim(),
+            'classroom': classroom.trim(),
+            'days': days,
+            'start_time': startTime,
+            'end_time': endTime,
+          })
+          .select('id')
+          .single();
+
+      return row['id'] as String;
     } on PostgrestException catch (e) {
       debugPrint('Error creando materia: ${e.code} - ${e.message}');
       throw AppException(_dbMessage(e));
     }
   }
 
-  String _dbMessage(PostgrestException e) {
+  @override
+  Future<EnrollResult> enrollStudents({
+    required String courseId,
+    required List<ImportedStudent> students,
+  }) async {
+    try {
+      final existingRows = await _client
+          .from('enrollments')
+          .select('student_code, student_name')
+          .eq('course_id', courseId);
 
-    if (e.code == '42501') {
-      return 'Sin permiso en la tabla courses. Revisa las políticas (RLS).';
+      final existingNames = <String, String>{
+        for (final row in existingRows)
+          row['student_code'] as String: row['student_name'] as String? ?? '',
+      };
+
+      final added = students
+          .where((s) => !existingNames.containsKey(s.code))
+          .length;
+      final updated = students.length - added;
+      final rows = students.map((student) {
+        final name = student.name.isNotEmpty
+            ? student.name
+            : existingNames[student.code];
+        return {
+          'course_id': courseId,
+          'student_code': student.code,
+          'student_name': name ?? '',
+        };
+      }).toList();
+
+      await _client
+          .from('enrollments')
+          .upsert(rows, onConflict: 'course_id,student_code');
+
+      return EnrollResult(added: added, updated: updated);
+    } on PostgrestException catch (e) {
+      debugPrint('Error matriculando: ${e.code} - ${e.message}');
+      throw AppException(_dbMessage(e));
+    } catch (e) {
+      debugPrint('Error de red matriculando: $e');
+      throw const AppException(
+        'No se pudo conectar. Revisa tu internet e intenta de nuevo.',
+      );
     }
-    
-    if (e.code == '42P01') return 'La tabla courses no existe en Supabase.';
-    return 'No se pudo acceder a las materias.';
+  }
+
+  String _dbMessage(PostgrestException e) {
+    // 42501 = Supabase bloqueó la operación por las políticas RLS
+    if (e.code == '42501') {
+      return 'No tienes permiso para esta operación. Revisa las políticas (RLS).';
+    }
+    // 42P01 = una tabla no existe
+    if (e.code == '42P01') {
+      return 'Falta una tabla en Supabase. Revisa que el SQL se ejecutó completo.';
+    }
+    // 42703 / PGRST204 = falta una columna (olvidaste correr el SQL nuevo)
+    if (e.code == '42703' || e.code == 'PGRST204') {
+      return 'Falta actualizar la base de datos (columna nueva). Ejecuta el SQL del paso 1.';
+    }
+    // 23503 = la materia a la que apuntamos ya no existe
+    if (e.code == '23503') return 'La materia ya no existe.';
+    // 23514 = un dato no cumple el formato que exige la base de datos
+    if (e.code == '23514') return 'Algún dato no tiene el formato permitido.';
+    return 'No se pudo acceder a los datos de las materias.';
   }
 }
