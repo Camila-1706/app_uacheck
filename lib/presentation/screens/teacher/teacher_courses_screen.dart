@@ -173,7 +173,7 @@ class _TeacherCoursesScreenState extends ConsumerState<TeacherCoursesScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: GestureDetector(
-              onTap: () => context.push('/teacher/course-detail'),
+              onTap: () => context.push('/teacher/course/${course.id}'),
               child: CourseCard(
                 title: course.title,
                 code: course.code,

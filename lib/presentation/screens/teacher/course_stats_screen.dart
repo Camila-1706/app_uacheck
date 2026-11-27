@@ -276,8 +276,13 @@ class _CourseStatsScreenState extends State<CourseStatsScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavigation(
+        indexActual: 2,
+        isTeacher: true,
+      ),
     );
   }
+
   Widget _buildStatCard({
     required String title,
     required String value,
@@ -316,6 +321,7 @@ class _CourseStatsScreenState extends State<CourseStatsScreen> {
       ),
     );
   }
+
   Widget _buildBar(String label, double height, {bool isHighlighted = false}) {
     return Column(
       children: [

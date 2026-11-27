@@ -1,4 +1,5 @@
 import 'package:app_uacheck_1/domain/entities/enroll_result.dart';
+import 'package:app_uacheck_1/domain/entities/enrolled_student.dart';
 import 'package:app_uacheck_1/domain/entities/imported_student.dart';
 
 import '../entities/course.dart';
@@ -21,5 +22,12 @@ abstract class CourseRepository {
   Future<EnrollResult> enrollStudents({
     required String courseId,
     required List<ImportedStudent> students,
+  });
+
+  Future<List<EnrolledStudent>> getCourseStudents(String courseId);
+
+  Future<void> removeStudent({
+    required String courseId,
+    required String studentCode,
   });
 }

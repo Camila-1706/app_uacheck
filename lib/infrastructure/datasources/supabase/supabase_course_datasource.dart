@@ -1,4 +1,5 @@
 import 'package:app_uacheck_1/domain/entities/enroll_result.dart';
+import 'package:app_uacheck_1/domain/entities/enrolled_student.dart';
 import 'package:app_uacheck_1/domain/entities/imported_student.dart';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -119,7 +120,7 @@ class SupabaseCourseDatasource implements CourseDatasource {
   }
 
   String _dbMessage(PostgrestException e) {
-    // 42501 = Supabase bloqueó la operación por las políticas RLS
+    // 42501 = Supabase bloqueo la operacion por las políticas RLS
     if (e.code == '42501') {
       return 'No tienes permiso para esta operación. Revisa las políticas (RLS).';
     }
@@ -127,7 +128,7 @@ class SupabaseCourseDatasource implements CourseDatasource {
     if (e.code == '42P01') {
       return 'Falta una tabla en Supabase. Revisa que el SQL se ejecutó completo.';
     }
-    // 42703 / PGRST204 = falta una columna (olvidaste correr el SQL nuevo)
+    // 42703 / PGRST204 = falta una columna
     if (e.code == '42703' || e.code == 'PGRST204') {
       return 'Falta actualizar la base de datos (columna nueva). Ejecuta el SQL del paso 1.';
     }
@@ -136,5 +137,72 @@ class SupabaseCourseDatasource implements CourseDatasource {
     // 23514 = un dato no cumple el formato que exige la base de datos
     if (e.code == '23514') return 'Algún dato no tiene el formato permitido.';
     return 'No se pudo acceder a los datos de las materias.';
+  }
+
+  @override
+  Future<List<EnrolledStudent>> getCourseStudents(String courseId) async {
+    try {
+      final enrollmentRows = await _client
+          .from('enrollments')
+          .select('student_code, student_name')
+          .eq('course_id', courseId)
+          .order('student_name');
+
+      final studentCodes = enrollmentRows
+          .map((row) => row['student_code'] as String)
+          .toList();
+
+      // Codigos que ya tienen cuenta en la app
+      final registeredCodes = <String>{};
+      if (studentCodes.isNotEmpty) {
+        final userRows = await _client
+            .from('users')
+            .select('code')
+            .inFilter('code', studentCodes);
+
+        for (final row in userRows) {
+          registeredCodes.add(row['code'] as String);
+        }
+      }
+
+      return enrollmentRows.map((row) {
+        final code = row['student_code'] as String;
+        return EnrolledStudent(
+          code: code,
+          name: row['student_name'] as String? ?? '',
+          hasAccount: registeredCodes.contains(code),
+        );
+      }).toList();
+    } on PostgrestException catch (e) {
+      debugPrint('Error leyendo estudiantes: ${e.code} - ${e.message}');
+      throw AppException(_dbMessage(e));
+    } catch (e) {
+      debugPrint('Error de red leyendo estudiantes: $e');
+      throw const AppException(
+        'No se pudo conectar. Revisa tu internet e intenta de nuevo.',
+      );
+    }
+  }
+
+  @override
+  Future<void> removeStudent({
+    required String courseId,
+    required String studentCode,
+  }) async {
+    try {
+      await _client
+          .from('enrollments')
+          .delete()
+          .eq('course_id', courseId)
+          .eq('student_code', studentCode);
+    } on PostgrestException catch (e) {
+      debugPrint('Error quitando estudiante: ${e.code} - ${e.message}');
+      throw AppException(_dbMessage(e));
+    } catch (e) {
+      debugPrint('Error de red quitando estudiante: $e');
+      throw const AppException(
+        'No se pudo conectar. Revisa tu internet e intenta de nuevo.',
+      );
+    }
   }
 }

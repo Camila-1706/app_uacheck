@@ -1,4 +1,5 @@
 import 'package:app_uacheck_1/domain/entities/enroll_result.dart';
+import 'package:app_uacheck_1/domain/entities/enrolled_student.dart';
 import 'package:app_uacheck_1/domain/entities/imported_student.dart';
 
 import '../../config/helpers/app_exception.dart';
@@ -41,6 +42,16 @@ class CourseRepositoryImpl implements CourseRepository {
       endTime: endTime,
     );
   }
+
+  @override
+  Future<List<EnrolledStudent>> getCourseStudents(String courseId) =>
+      datasource.getCourseStudents(courseId);
+
+  @override
+  Future<void> removeStudent({
+    required String courseId,
+    required String studentCode,
+  }) => datasource.removeStudent(courseId: courseId, studentCode: studentCode);
 
   @override
   Future<EnrollResult> enrollStudents({

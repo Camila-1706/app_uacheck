@@ -77,9 +77,11 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const AddCourseScreen(),
       ),
       GoRoute(
-        path: '/teacher/course-detail',
-        builder: (context, state) => const CourseDetailScreen(),
+        path: '/teacher/course/:courseId',
+        builder: (context, state) =>
+            CourseDetailScreen(courseId: state.pathParameters['courseId']!),
       ),
+
       GoRoute(
         path: '/teacher/generate-qr',
         builder: (context, state) => const GenerateQrScreen(),
@@ -89,8 +91,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const LiveSessionScreen(),
       ),
       GoRoute(
-        path: '/teacher/student-list',
-        builder: (context, state) => const StudentListScreen(),
+        path: '/teacher/course/:courseId/students',
+        builder: (context, state) =>
+            StudentListScreen(courseId: state.pathParameters['courseId']!),
       ),
       GoRoute(
         path: '/teacher/stats',
